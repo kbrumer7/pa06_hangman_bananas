@@ -4,14 +4,20 @@
   <div class="jumbotron">
     <h1>Hangman</h1>
   </div>
-  <p>Here is your word</p>
-  {{state['word_so_far']}}
+  <h4>Play hangman with us!</h4>
+  {{state['dashes']}}
   <form method="post" action="/play">
     Guess a letter: <input type="text" name="guess">
     <br>
     <input type="submit" class="btn btn-lg btn-danger">
   </form>
-  <p>Here are the letters you've guessed already</p>
+  <p></p>
+  {{state['letter_guessed']}}
+  {{state['all_letters_found']}}
+  {{state['not_in_word']}}
+  {{state['letter_in_word']}}
+  <p></p>
+  <p>Here are the letters you've guessed already:</p>
   {% for x in state['guesses'] %}
    {{x}}
   {% endfor %}
