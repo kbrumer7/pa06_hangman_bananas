@@ -1,3 +1,5 @@
+# This is the hangman_app.py
+
 import random
 
 def generate_random_word():
