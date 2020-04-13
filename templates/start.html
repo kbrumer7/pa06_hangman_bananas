@@ -4,8 +4,8 @@
   <div class="jumbotron">
     <h1>Hangman</h1>
   </div>
-  <p>Here is your word</p>
-  {{state['word_so_far']}}
+  <h4>Play hangman with us!</h4>
+  {{state['dashes']}}
   <form method="post" action="/play">
     Guess a letter: <input type="text" name="guess">
     <br>
