@@ -9,9 +9,15 @@ app = Flask(__name__)
 
 global state
 state = {'guesses':[],
-         'word':"interesting",
-		 'word_so_far':"-----------",
-		 'done':False}
+		'word':"",
+		'done':False,
+		'letter_guessed':"",
+		'correct_letters':[],
+		'found_all_letters': False,
+		'all_letters_found':"",
+		'not_in_word':"",
+		'letter_in_word':"",
+		'dashes':""}
 
 @app.route('/')
 @app.route('/main')
@@ -29,21 +35,46 @@ def play():
 def hangman():
 	""" plays hangman game """
 	global state
+
 	if request.method == 'GET':
 		return play()
 
 	elif request.method == 'POST':
 		letter = request.form['guess']
-		# check if letter has already been guessed
-		# and generate a response to guess again
-		# else check if letter is in word
-		# then see if the word is complete
-		# if letter not in word, then tell them
+		state['letter_guessed'] = ""
+		state['all_letters_found'] = ""
+		state['not_in_word'] = ""
+		state['letter_in_word'] = ""
+		state['dashes'] = ""
+
+		if letter in state['guesses']:
+			state['letter_guessed'] = "That letter has already been guessed. Guess again!"
+		if letter in state['word']:
+			state['correct_letters'] += letter
+			state['letter_in_word'] = "That letter is in the word! Good job!"
+			for i in state['word']:
+				if i not in state['correct_letters']:
+					state['found_all_letters'] = False
+					break
+				else:
+					state['found_all_letters'] = True
+			if state['found_all_letters'] == True:
+				state['all_letters_found'] = "Congrats! You guessed the word!"
+				state['letter_in_word'] = ""
+		else:
+			state['not_in_word'] = "Sorry, that letter is not in the word. Guess again!"
+
 		state['guesses'] += [letter]
+
+		for d in state['word']:
+			if d in state['guesses']:
+				state['dashes'] += d
+			else:
+				state['dashes'] += '-'
 		return render_template('play.html',state=state)
 
 
 
 
 if __name__ == '__main__':
-    app.run('0.0.0.0',port=3000)
+	app.run('0.0.0.0',port=3000)
