@@ -24,6 +24,18 @@ state = {'guesses':[],
 def main():
 	return render_template('hangman.html')
 
+@app.route('/aboutkayla')
+def aboutkayla():
+    return render_template('aboutkayla.html')
+
+@app.route('/aboutlily')
+def aboutlily():
+    return render_template('aboutlily.html')
+
+@app.route('/aboutmaddy')
+def aboutmaddy():
+    return render_template('aboutmaddy.html')
+
 @app.route('/start')
 def play():
 	global state
